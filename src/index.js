@@ -1,13 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
+import './App.css'
+import Chat from './Chat'
 import registerServiceWorker from './registerServiceWorker'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <App />
+    <Chat />
   </MuiThemeProvider>
   , document.getElementById('root'));
 
