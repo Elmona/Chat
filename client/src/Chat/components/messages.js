@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Message from '../styles/message'
-
+import Icon from '../styles/icon'
 
 class Messages extends Component {
   render() {
@@ -10,8 +10,14 @@ class Messages extends Component {
 
     return (
       <div>
-        {messages.map(x => 
-          (<Message>{x}</Message>))}
+        {messages.map(x =>
+          (<Message>
+            <Icon avatar={x.avatar} />
+            <div>
+              <div>{x.nick}</div>
+              <div>{x.msg}</div>
+            </div>
+          </Message>))}
       </div>
     )
   }

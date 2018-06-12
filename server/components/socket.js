@@ -4,10 +4,9 @@ const socket = io => {
     console.log('Connection')
 
     socket.on('msg', data => {
-      socket.emit('msg', data)
+      io.emit('msg', data)
     })
   })
-
 }
 
 module.exports = socket

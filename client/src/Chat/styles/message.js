@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 const Message = styled.div`
   display: flex;
-  height: 30px;
+  height: 35px;
   width: 100%;
-  border: 1px solid;
+  margin-top: 4px;
 `
 
 export default Message
