@@ -6,10 +6,13 @@ import AppBar from 'material-ui/AppBar'
 import Draggable from 'react-draggable'
 import Messages from './components/messages'
 
+import io from 'socket.io-client'
+
 class Chat extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      msg: '',
       messages: [
         'Hejsan hejsan',
         'Hejsan hejsan',
@@ -17,7 +20,28 @@ class Chat extends Component {
         'Hejsan hejsan'
       ]
     }
+
+    for (let i = 0; i < 100; i++)
+      this.state.messages.push('hoho')
+
+    if (process.env.NODE_ENV === 'development') {
+      this.socket = io('')
+    } else {
+      this.socket = io('', { path: '/api/socket.io' })
+    }
+
+    this.socket.on('msg', data => {
+      this.setState({ messages: [...this.state.messages, data] })
+    })
   }
+
+  sendMessage(e) {
+    console.log(this.state.msg)
+    e.preventDefault()
+    this.socket.emit('msg', this.state.msg)
+    this.setState({ msg: '' })
+  }
+
   render() {
     return (
       <Container>
@@ -29,16 +53,19 @@ class Chat extends Component {
               className='handle'
               title='Chat'
             />
-            <div style={{ height: '500px' }}>
+            <div style={{ height: '500px', overflowX: 'hidden', overflowY: 'auto' }}>
               <Messages
                 messages={this.state.messages}
               />
             </div>
-            <TextField
-              style={{ width: '95%', marginLeft: '10px' }}
-              placeholder='Message'
-              fullWidth={true}
-            />
+            <form onSubmit={e => this.sendMessage(e)}>
+              <TextField
+                onChange={e => this.setState({ msg: e.target.value })}
+                style={{ width: '95%', marginLeft: '10px' }}
+                placeholder='Message'
+                fullWidth={true}
+              />
+            </form>
           </Paper>
         </Draggable>
       </Container>
