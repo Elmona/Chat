@@ -19,7 +19,7 @@ class Messages extends Component {
             <div>
               <div>
                 <span style={{ fontWeight: 'bold' }}>{x.nick}</span>
-                <span style={{ fontStyle: 'italic', marginLeft: '5px'}}>{formatDate(x.date)}</span>
+                <span style={{ fontStyle: 'italic', marginLeft: '5px', fontSize: '80%'}}>{formatDate(x.date)}</span>
               </div>
               <div>{x.msg}</div>
             </div>

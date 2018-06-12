@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
-import TextField from 'material-ui/TextField'
 import Container from '../styles/Container'
 import AppBar from 'material-ui/AppBar'
-import Draggable from 'react-draggable'
 import Messages from './components/messages'
+import InputForm from './components/inputForm'
 
 import io from 'socket.io-client'
 
@@ -20,7 +19,8 @@ class Chat extends Component {
         { nick: 'Adam', msg: 'Hejsan hejsan', avatar: 4, date: 1558800557469 }
       ],
       avatar: Math.floor(Math.random() * 6) + 1,
-      nick: 'Emil'
+      nick: '',
+      tempNick: ''
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -35,38 +35,53 @@ class Chat extends Component {
   }
 
   sendMessage(e) {
+    console.log(e)
     e.preventDefault()
     this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick, date: Date.now() })
     this.setState({ msg: '' })
   }
 
+  setNickName(e) {
+    console.log(e)
+    e.preventDefault()
+    this.setState({ nick: this.state.tempNick })
+  }
+
   render() {
     return (
       <Container>
-        <Draggable
-          handle='.handle'
-        >
-          <Paper zDepth='3'>
-            <AppBar
-              className='handle'
-              title='Chat'
-            />
-            <div style={{ height: '500px', overflowX: 'hidden', overflowY: 'auto' }}>
-              <Messages
-                messages={this.state.messages}
-              />
-            </div>
-            <form onSubmit={e => this.sendMessage(e)}>
-              <TextField
-                value={this.state.msg}
+        <Paper zDepth={3}>
+          <AppBar title='Chat' />
+          {this.state.nick ? (
+            <div>
+              <div style={{ height: '500px', overflowX: 'hidden', overflowY: 'auto' }}>
+                <Messages
+                  messages={this.state.messages}
+                />
+              </div>
+              <InputForm
+                onSubmit={e => this.sendMessage(e)}
                 onChange={e => this.setState({ msg: e.target.value })}
+                value={this.state.msg}
                 style={{ width: '95%', marginLeft: '10px' }}
                 placeholder='Message'
                 fullWidth={true}
               />
-            </form>
-          </Paper>
-        </Draggable>
+            </div>
+          ) : (
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <h1 style={{ textAlign: 'center', paddingTop: '10px' }}>Enter nickname</h1>
+                <InputForm
+                  onSubmit={e => this.setNickName(e)}
+                  onChange={e => this.setState({ tempNick: e.target.value })}
+                  value={this.state.tempNick}
+                  style={{ marginLeft: '50px', marginBottom: '10px' }}
+                  placeholder='Enter Nickname'
+                  fullWidth={false}
+                />
+              </div>
+            )}
+        </Paper>
       </Container>
     );
   }
