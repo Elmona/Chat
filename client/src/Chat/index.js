@@ -14,10 +14,10 @@ class Chat extends Component {
     this.state = {
       msg: '',
       messages: [
-        { nick: 'Kalle', msg: 'Hejsan hejsan', avatar: 1 },
-        { nick: 'Sara', msg: 'Hejsan hejsan', avatar: 2 },
-        { nick: 'Lotta', msg: 'Hejsan hejsan', avatar: 3 },
-        { nick: 'Adam', msg: 'Hejsan hejsan', avatar: 4 }
+        { nick: 'Kalle', msg: 'Hejsan hejsan', avatar: 1, date: 1528799686841 },
+        { nick: 'Sara', msg: 'Hejsan hejsan', avatar: 2, date: 1528800160757 },
+        { nick: 'Lotta', msg: 'Hejsan hejsan', avatar: 3, date: 1528800537469 },
+        { nick: 'Adam', msg: 'Hejsan hejsan', avatar: 4, date: 1558800557469 }
       ],
       avatar: Math.floor(Math.random() * 6) + 1,
       nick: 'Emil'
@@ -36,7 +36,7 @@ class Chat extends Component {
 
   sendMessage(e) {
     e.preventDefault()
-    this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick })
+    this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick, date: Date.now() })
     this.setState({ msg: '' })
   }
 

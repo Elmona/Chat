@@ -7,6 +7,8 @@ const Icon = styled.div`
   background-image: url('/pics/avatars/${props => props.avatar}.svg');
   background-repeat: no-repeat;
   background-size: 35px 35px;
+  padding: 5px;
+  margin-left: 5px;
 `
 
 export default Icon
