@@ -21,9 +21,6 @@ class Chat extends Component {
       ]
     }
 
-    for (let i = 0; i < 100; i++)
-      this.state.messages.push('hoho')
-
     if (process.env.NODE_ENV === 'development') {
       this.socket = io('')
     } else {
@@ -36,7 +33,6 @@ class Chat extends Component {
   }
 
   sendMessage(e) {
-    console.log(this.state.msg)
     e.preventDefault()
     this.socket.emit('msg', this.state.msg)
     this.setState({ msg: '' })
@@ -60,6 +56,7 @@ class Chat extends Component {
             </div>
             <form onSubmit={e => this.sendMessage(e)}>
               <TextField
+                value={this.state.msg}
                 onChange={e => this.setState({ msg: e.target.value })}
                 style={{ width: '95%', marginLeft: '10px' }}
                 placeholder='Message'
