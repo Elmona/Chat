@@ -19,7 +19,7 @@ class Chat extends Component {
         { nick: 'Adam', msg: 'Hejsan hejsan', avatar: 4, date: 1558800557469 }
       ],
       avatar: Math.floor(Math.random() * 6) + 1,
-      nick: '',
+      nick: 'Emil',
       tempNick: ''
     }
 
@@ -50,38 +50,34 @@ class Chat extends Component {
   render() {
     return (
       <Container>
-        <Paper zDepth={3}>
-          <AppBar title='Chat' />
-          {this.state.nick ? (
-            <div>
-              <div style={{ height: '500px', overflowX: 'hidden', overflowY: 'auto' }}>
-                <Messages
-                  messages={this.state.messages}
-                />
-              </div>
+        <AppBar title='Chat' />
+        {this.state.nick ? (
+            <React.Fragment>
+            <Messages
+              messages={this.state.messages}
+            />
+            <InputForm
+              onSubmit={e => this.sendMessage(e)}
+              onChange={e => this.setState({ msg: e.target.value })}
+              value={this.state.msg}
+              style={{ width: '95%', marginLeft: '10px' }}
+              placeholder='Message'
+              fullWidth={true}
+            />
+            </React.Fragment>
+        ) : (
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <h1 style={{ textAlign: 'center', paddingTop: '20px' }}>Enter nickname</h1>
               <InputForm
-                onSubmit={e => this.sendMessage(e)}
-                onChange={e => this.setState({ msg: e.target.value })}
-                value={this.state.msg}
-                style={{ width: '95%', marginLeft: '10px' }}
-                placeholder='Message'
-                fullWidth={true}
+                onSubmit={e => this.setNickName(e)}
+                onChange={e => this.setState({ tempNick: e.target.value })}
+                value={this.state.tempNick}
+                style={{ marginLeft: '50px', marginBottom: '10px', alignSelf: 'center', justifyContent: 'center' }}
+                placeholder='Enter Nickname'
+                fullWidth={false}
               />
             </div>
-          ) : (
-              <div style={{display: 'flex', flexDirection: 'column'}}>
-                <h1 style={{ textAlign: 'center', paddingTop: '10px' }}>Enter nickname</h1>
-                <InputForm
-                  onSubmit={e => this.setNickName(e)}
-                  onChange={e => this.setState({ tempNick: e.target.value })}
-                  value={this.state.tempNick}
-                  style={{ marginLeft: '50px', marginBottom: '10px' }}
-                  placeholder='Enter Nickname'
-                  fullWidth={false}
-                />
-              </div>
-            )}
-        </Paper>
+          )}
       </Container>
     );
   }

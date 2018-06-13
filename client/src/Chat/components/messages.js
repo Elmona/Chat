@@ -12,7 +12,7 @@ class Messages extends Component {
     } = this.props
 
     return (
-      <div>
+      <div style={{ flex: '1', overflowX: 'hidden', overflowY: 'auto' }}>
         {messages.map(x =>
           (<Message>
             <Icon avatar={x.avatar} />
