@@ -3,6 +3,8 @@ import Container from '../styles/Container'
 import AppBar from 'material-ui/AppBar'
 import Messages from './components/messages'
 import InputForm from './components/inputForm'
+import TextField from 'material-ui/TextField'
+import Paper from 'material-ui/Paper'
 
 import io from 'socket.io-client'
 
@@ -22,16 +24,20 @@ class Chat extends Component {
     } else {
       this.socket = io('', { path: '/api/socket.io' })
     }
+    // this.refChatBottom = React.createRef()
   }
 
   componentDidMount() {
     this.socket.on('msg', data => {
       this.setState({ messages: [...this.state.messages, data] })
+      // this.refMessages.scrollIntoView({ behavior: 'smooth '})
     })
 
     this.socket.on('connection', data => {
       console.log('New messages from server')
       this.setState({ messages: data.data })
+      // this.refMessages.scrollIntoView({ behavior: 'smooth '})
+      console.log(this.refChatBottom)
     })
   }
 
@@ -40,6 +46,7 @@ class Chat extends Component {
     e.preventDefault()
     this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick, date: Date.now() })
     this.setState({ msg: '' })
+    // this.refMessages.scrollIntoView({ behavior: 'smooth '})
   }
 
   setNickName(e) {
@@ -55,27 +62,34 @@ class Chat extends Component {
           <React.Fragment>
             <Messages
               messages={this.state.messages}
+              refChatBottom={r => console.log('blahahaaa', r)}
             />
-            <InputForm
-              onSubmit={e => this.sendMessage(e)}
-              onChange={e => this.setState({ msg: e.target.value })}
-              value={this.state.msg}
-              style={{ width: '95%', marginLeft: '10px' }}
-              placeholder='Message'
-              fullWidth={true}
-            />
+            <Paper zDepth={3}>
+              <InputForm
+                onSubmit={e => this.sendMessage(e)}
+                onChange={e => this.setState({ msg: e.target.value })}
+                value={this.state.msg}
+                style={{ width: '95%', marginLeft: '10px' }}
+                placeholder='Message'
+                fullWidth={true}
+              />
+            </Paper>
           </React.Fragment>
         ) : (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
               <h1 style={{ textAlign: 'center', paddingTop: '20px' }}>Enter nickname</h1>
-              <InputForm
+              <form
                 onSubmit={e => this.setNickName(e)}
-                onChange={e => this.setState({ tempNick: e.target.value })}
-                value={this.state.tempNick}
-                style={{ marginLeft: '50px', marginBottom: '10px', alignSelf: 'center', justifyContent: 'center' }}
-                placeholder='Enter Nickname'
-                fullWidth={false}
-              />
+                style={{ alignSelf: 'center' }}
+              >
+                <TextField
+                  onChange={e => this.setState({ tempNick: e.target.value })}
+                  value={this.state.tempNick}
+                  style={{ alignSelf: 'center' }}
+                  placeholder='Enter Nickname'
+                  fullWidth={false}
+                />
+              </form>
             </div>
           )}
       </Container>
