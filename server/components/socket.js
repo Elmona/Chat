@@ -5,10 +5,12 @@ const socket = io => {
     console.log('Connection')
 
     socket.on('msg', data => {
+      console.log(data)
       // Saving to database
       const message = new Message({
         date: data.date,
         nick: data.nick,
+        msg: data.msg,
         channel: 'general',
         avatar: data.avatar,
         ip: socket.handshake.headers['x-forwarded-for'],
