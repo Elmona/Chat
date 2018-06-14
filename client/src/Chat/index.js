@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper'
 import Container from '../styles/Container'
 import AppBar from 'material-ui/AppBar'
 import Messages from './components/messages'
@@ -12,12 +11,7 @@ class Chat extends Component {
     super(props)
     this.state = {
       msg: '',
-      messages: [
-        { nick: 'Kalle', msg: 'Hejsan hejsan', avatar: 1, date: 1528799686841 },
-        { nick: 'Sara', msg: 'Hejsan hejsan', avatar: 2, date: 1528800160757 },
-        { nick: 'Lotta', msg: 'Hejsan hejsan', avatar: 3, date: 1528800537469 },
-        { nick: 'Adam', msg: 'Hejsan hejsan', avatar: 4, date: 1558800557469 }
-      ],
+      messages: [],
       avatar: Math.floor(Math.random() * 6) + 1,
       nick: 'Emil',
       tempNick: ''
@@ -28,9 +22,16 @@ class Chat extends Component {
     } else {
       this.socket = io('', { path: '/api/socket.io' })
     }
+  }
 
+  componentDidMount() {
     this.socket.on('msg', data => {
       this.setState({ messages: [...this.state.messages, data] })
+    })
+
+    this.socket.on('connection', data => {
+      console.log('New messages from server')
+      this.setState({ messages: data.data })
     })
   }
 
@@ -42,7 +43,6 @@ class Chat extends Component {
   }
 
   setNickName(e) {
-    console.log(e)
     e.preventDefault()
     this.setState({ nick: this.state.tempNick })
   }
@@ -52,7 +52,7 @@ class Chat extends Component {
       <Container>
         <AppBar title='Chat' />
         {this.state.nick ? (
-            <React.Fragment>
+          <React.Fragment>
             <Messages
               messages={this.state.messages}
             />
@@ -64,7 +64,7 @@ class Chat extends Component {
               placeholder='Message'
               fullWidth={true}
             />
-            </React.Fragment>
+          </React.Fragment>
         ) : (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <h1 style={{ textAlign: 'center', paddingTop: '20px' }}>Enter nickname</h1>
