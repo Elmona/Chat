@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Container from '../styles/Container'
-import AppBar from 'material-ui/AppBar'
 import Messages from './components/messages'
 import InputForm from './components/inputForm'
 import TextField from 'material-ui/TextField'
@@ -15,7 +14,7 @@ class Chat extends Component {
       msg: '',
       messages: [],
       avatar: Math.floor(Math.random() * 6) + 1,
-      nick: '',
+      nick: 'Emil',
       tempNick: ''
     }
 
@@ -57,9 +56,12 @@ class Chat extends Component {
   render() {
     return (
       <Container>
-        <AppBar title='Chat' />
-        {this.state.nick ? (
+        {this.state.nick ? [
           <React.Fragment>
+            <Paper zDepth={1} style={{ height: '50px', backgroundColor: '#00bcd4', color: '#FFF', display: 'flex' }}>
+              <div>Users online:</div>
+              <button>Change Nick</button>
+            </Paper>
             <Messages
               messages={this.state.messages}
               refChatBottom={r => this.refChatBottom = r}
@@ -75,7 +77,7 @@ class Chat extends Component {
               />
             </Paper>
           </React.Fragment>
-        ) : (
+        ] : (
             <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
               <h1 style={{ textAlign: 'center', paddingTop: '20px' }}>Enter nickname</h1>
               <form
@@ -85,7 +87,6 @@ class Chat extends Component {
                 <TextField
                   onChange={e => this.setState({ tempNick: e.target.value })}
                   value={this.state.tempNick}
-                  style={{ alignSelf: 'center' }}
                   placeholder='Enter Nickname'
                   fullWidth={false}
                 />
