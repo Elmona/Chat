@@ -26,7 +26,7 @@ class Messages extends Component {
               <div>{x.msg}</div>
             </div>
           </Message>))}
-        <div ref={refChatBottom}></div>
+        <div ref={refChatBottom} style={{ height: '1px'}}></div>
       </div>
     )
   }

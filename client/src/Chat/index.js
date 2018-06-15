@@ -15,7 +15,7 @@ class Chat extends Component {
       msg: '',
       messages: [],
       avatar: Math.floor(Math.random() * 6) + 1,
-      nick: 'Emil',
+      nick: '',
       tempNick: ''
     }
 
@@ -24,29 +24,29 @@ class Chat extends Component {
     } else {
       this.socket = io('', { path: '/api/socket.io' })
     }
-    // this.refChatBottom = React.createRef()
   }
 
   componentDidMount() {
     this.socket.on('msg', data => {
       this.setState({ messages: [...this.state.messages, data] })
-      // this.refMessages.scrollIntoView({ behavior: 'smooth '})
+      if (this.refChatBottom)
+        this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
     })
 
     this.socket.on('connection', data => {
       console.log('New messages from server')
       this.setState({ messages: data.data })
-      // this.refMessages.scrollIntoView({ behavior: 'smooth '})
-      console.log(this.refChatBottom)
+      if (this.refChatBottom)
+        this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
     })
   }
 
   sendMessage(e) {
-    console.log(e)
     e.preventDefault()
     this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick, date: Date.now() })
     this.setState({ msg: '' })
-    // this.refMessages.scrollIntoView({ behavior: 'smooth '})
+    if (this.refChatBottom)
+      this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
   }
 
   setNickName(e) {
@@ -62,7 +62,7 @@ class Chat extends Component {
           <React.Fragment>
             <Messages
               messages={this.state.messages}
-              refChatBottom={r => console.log('blahahaaa', r)}
+              refChatBottom={r => this.refChatBottom = r}
             />
             <Paper zDepth={3}>
               <InputForm
