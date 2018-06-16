@@ -2,6 +2,9 @@ const Message = require('../models/message')
 
 const socket = io => {
   io.on('connection', socket => {
+    let userCount = io.engine.clientsCount
+    io.sockets.emit('userCount', userCount)
+
     // On connect send the 50 latest messages to chat.
     Message
       .find({ channel: 'general' })
@@ -34,7 +37,10 @@ const socket = io => {
         userAgent: socket.handshake.headers['user-agent']
       }).save()
 
-      io.emit('msg', data)
+      io.on('disconnect', () => 
+        io.emit('userCount', userCount))
+
+      io.sockets.emit('msg', data)
     })
   })
 }
