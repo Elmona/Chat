@@ -4,6 +4,7 @@ import Messages from './components/messages'
 import InputForm from './components/inputForm'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
+import LongMenu from './components/longMenu'
 
 import io from 'socket.io-client'
 
@@ -25,27 +26,32 @@ class Chat extends Component {
     }
   }
 
+  // TODO: Use smooth scrolling on browsers supporting it.
+  scrollBottom() {
+    if (this.refChatBottom)
+      this.refChatBottom.scrollIntoView()
+  }
+
   componentDidMount() {
     this.socket.on('msg', data => {
       this.setState({ messages: [...this.state.messages, data] })
-      if (this.refChatBottom)
-        this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
+      this.scrollBottom()
     })
 
     this.socket.on('connection', data => {
-      console.log('New messages from server')
       this.setState({ messages: data.data })
-      if (this.refChatBottom)
-        this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
+      this.scrollBottom()
     })
+
+    this.socket.on('userCount', data =>
+      this.setState({ userCount: data}))
   }
 
   sendMessage(e) {
     e.preventDefault()
     this.socket.emit('msg', { msg: this.state.msg, avatar: this.state.avatar, nick: this.state.nick, date: Date.now() })
     this.setState({ msg: '' })
-    if (this.refChatBottom)
-      this.refChatBottom.scrollIntoView({ behavior: 'smooth' })
+    this.scrollBottom()
   }
 
   setNickName(e) {
@@ -58,9 +64,11 @@ class Chat extends Component {
       <Container>
         {this.state.nick ? [
           <React.Fragment>
-            <Paper zDepth={1} style={{ height: '50px', backgroundColor: '#00bcd4', color: '#FFF', display: 'flex' }}>
-              <div>Users online:</div>
-              <button>Change Nick</button>
+            <Paper zDepth={1} style={{ height: '50px', backgroundColor: '#00bcd4', color: '#FFF', display: 'flex', justifyContent: 'space-between' }}>
+              <div>Users online: {this.state.userCount}</div>
+              <LongMenu
+                changeNick={() => this.setState({ nick: '' })}
+              />
             </Paper>
             <Messages
               messages={this.state.messages}
