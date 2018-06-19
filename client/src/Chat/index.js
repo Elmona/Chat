@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Container from '../styles/Container'
 import Messages from './components/messages'
 import InputForm from './components/inputForm'
-import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import LongMenu from './components/longMenu'
 
@@ -15,7 +14,7 @@ class Chat extends Component {
       msg: '',
       messages: [],
       avatar: Math.floor(Math.random() * 6) + 1,
-      nick: 'Emil',
+      nick: props.nick,
       tempNick: ''
     }
 
@@ -44,7 +43,7 @@ class Chat extends Component {
     })
 
     this.socket.on('userCount', data =>
-      this.setState({ userCount: data}))
+      this.setState({ userCount: data }))
   }
 
   sendMessage(e) {
@@ -62,10 +61,11 @@ class Chat extends Component {
   render() {
     return (
       <Container>
-        {this.state.nick ? [
           <React.Fragment>
             <Paper zDepth={1} style={{ height: '50px', backgroundColor: '#00bcd4', color: '#FFF', display: 'flex', justifyContent: 'space-between' }}>
-              <div>Users online: {this.state.userCount}</div>
+              <div style={{ alignSelf: 'center' }}>
+                Users online: {this.state.userCount}
+              </div>
               <LongMenu
                 changeNick={() => this.setState({ nick: '' })}
               />
@@ -85,22 +85,6 @@ class Chat extends Component {
               />
             </Paper>
           </React.Fragment>
-        ] : (
-            <div style={{ display: 'flex', flex: '1', flexDirection: 'column' }}>
-              <h1 style={{ textAlign: 'center', paddingTop: '20px' }}>Enter nickname</h1>
-              <form
-                onSubmit={e => this.setNickName(e)}
-                style={{ alignSelf: 'center' }}
-              >
-                <TextField
-                  onChange={e => this.setState({ tempNick: e.target.value })}
-                  value={this.state.tempNick}
-                  placeholder='Enter Nickname'
-                  fullWidth={false}
-                />
-              </form>
-            </div>
-          )}
       </Container>
     );
   }

@@ -37,13 +37,13 @@ const socket = io => {
         userAgent: socket.handshake.headers['user-agent']
       }).save()
 
-      // TODO: Maybe send userCount every ten seconds. It doesn't seems that this triggers all the time
-      io.on('disconnect', () => 
-        io.emit('userCount', userCount))
-
       io.sockets.emit('msg', data)
     })
   })
+  
+  // TODO: Maybe send userCount every ten seconds. It doesn't seems that this triggers all the time
+  io.on('disconnect', () =>
+    io.emit('userCount', userCount))
 }
 
 module.exports = socket
