@@ -15,7 +15,6 @@ class Chat extends Component {
       messages: [],
       avatar: Math.floor(Math.random() * 6) + 1,
       nick: props.nick,
-      tempNick: ''
     }
 
     if (process.env.NODE_ENV === 'development') {
@@ -27,8 +26,7 @@ class Chat extends Component {
 
   // TODO: Use smooth scrolling on browsers supporting it.
   scrollBottom() {
-    if (this.refChatBottom)
-      this.refChatBottom.scrollIntoView()
+    this.refChatBottom.scrollIntoView()
   }
 
   componentDidMount() {

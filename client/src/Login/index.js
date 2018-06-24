@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Container from '../styles/Container'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
+import Avatars from '../components/avatars'
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Login extends Component {
               style={{ padding: '30px' }}
               zDepth={5}
             >
-              <p>Put avatars here</p>
+              <Avatars />
               <TextField
                 style={{ backgroundColor: '#FFF' }}
                 onChange={e => this.setState({ nick: e.target.value })}
