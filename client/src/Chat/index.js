@@ -13,7 +13,7 @@ class Chat extends Component {
     this.state = {
       msg: '',
       messages: [],
-      avatar: Math.floor(Math.random() * 6) + 1,
+      avatar: props.avatar,
       nick: props.nick,
     }
 

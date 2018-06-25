@@ -7,7 +7,8 @@ class Router extends Component {
     super(props)
     this.state = {
       login: false,
-      nick: ''
+      nick: '',
+      avatar: ''
     }
   }
 
@@ -15,12 +16,12 @@ class Router extends Component {
     return (
       <div style={{ height: '100%' }}>
         {this.state.login ? (
-          <Chat nick={this.state.nick} />
+          <Chat nick={this.state.nick} avatar={this.state.avatar}/>
         )
           : (
-            <Login login={x => {
-              console.log(x)
-              this.setState({ nick: x, login: true })
+            <Login login={(nick, avatar) => {
+              // console.log(nick, avatar)
+              this.setState({ nick: nick, avatar: avatar, login: true })
             }} />
           )}
       </div>
