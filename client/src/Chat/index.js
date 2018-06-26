@@ -4,6 +4,7 @@ import Messages from './components/messages'
 import InputForm from './components/inputForm'
 import Paper from 'material-ui/Paper'
 import LongMenu from './components/longMenu'
+import Header from './styles/header'
 
 import io from 'socket.io-client'
 
@@ -59,30 +60,30 @@ class Chat extends Component {
   render() {
     return (
       <Container>
-          <React.Fragment>
-            <Paper zDepth={1} style={{ height: '50px', backgroundColor: '#00bcd4', color: '#FFF', display: 'flex', justifyContent: 'space-between' }}>
+        <React.Fragment>
+          <Header>
               <div style={{ alignSelf: 'center' }}>
                 Users online: {this.state.userCount}
               </div>
               <LongMenu
-                changeNick={() => this.setState({ nick: '' })}
+                changeNick={() => console.log('Not implemented yet.')}
               />
-            </Paper>
-            <Messages
-              messages={this.state.messages}
-              refChatBottom={r => this.refChatBottom = r}
+          </Header>
+          <Messages
+            messages={this.state.messages}
+            refChatBottom={r => this.refChatBottom = r}
+          />
+          <Paper zDepth={3}>
+            <InputForm
+              onSubmit={e => this.sendMessage(e)}
+              onChange={e => this.setState({ msg: e.target.value })}
+              value={this.state.msg}
+              style={{ width: '95%', marginLeft: '10px' }}
+              placeholder='Message'
+              fullWidth={true}
             />
-            <Paper zDepth={3}>
-              <InputForm
-                onSubmit={e => this.sendMessage(e)}
-                onChange={e => this.setState({ msg: e.target.value })}
-                value={this.state.msg}
-                style={{ width: '95%', marginLeft: '10px' }}
-                placeholder='Message'
-                fullWidth={true}
-              />
-            </Paper>
-          </React.Fragment>
+          </Paper>
+        </React.Fragment>
       </Container>
     );
   }
