@@ -62,12 +62,13 @@ class Chat extends Component {
       <Container>
         <React.Fragment>
           <Header>
-              <div style={{ alignSelf: 'center' }}>
-                Users online: {this.state.userCount}
-              </div>
-              <LongMenu
-                changeNick={() => console.log('Not implemented yet.')}
-              />
+            <p>Should be something here.</p>
+            <div style={{ alignSelf: 'center' }}>
+              Users online: {this.state.userCount}
+            </div>
+            <LongMenu
+              changeNick={() => console.log('Not implemented yet.')}
+            />
           </Header>
           <Messages
             messages={this.state.messages}
