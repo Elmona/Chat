@@ -20,7 +20,7 @@ class Messages extends Component {
         overflowX: 'hidden',
         overflowY: 'auto',
         backgroundColor: '#FFF',
-        boxShadow: ' inset 0px 15px 54px -30px rgba(89,89,89,0.59)'
+        boxShadow: 'inset 0px 15px 54px -30px rgba(89,89,89,0.59)'
       }}>
         {messages.map(x =>
           (<Message>
