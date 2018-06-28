@@ -3,6 +3,7 @@ import Container from '../styles/Container'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Avatars from '../components/avatars'
+import Button from 'material-ui/RaisedButton'
 
 class Login extends Component {
   constructor(props) {
@@ -47,7 +48,8 @@ class Login extends Component {
                 value={this.state.nick}
                 floatingLabelText='Enter Nickname'
                 fullWidth={false}
-              />
+              /><br />
+              <Button size={'small'}>Chat</Button>
             </Paper>
           </form>
         </div>
