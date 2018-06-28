@@ -1,9 +1,21 @@
 const Message = require('../models/message')
 
 const socket = io => {
+  io.use((socket, next) => {
+    let data = socket.handshake.query
+    console.log(data)
+    next()
+  })
+  const getUserListAsArray = () =>
+    Object.keys(io.sockets.sockets)
+      .map(x => io.sockets.sockets[x].nickname)
+
   io.on('connection', socket => {
+    // console.log(socket)
     let userCount = io.engine.clientsCount
-    io.sockets.emit('userCount', userCount)
+    socket.nickname = 'temp'
+    io.emit('userCount', userCount)
+    io.emit('userList', getUserListAsArray())
 
     // On connect send the 50 latest messages to chat.
     Message
@@ -25,6 +37,10 @@ const socket = io => {
         socket.emit('connection', { data: data })
       })
 
+    socket.on('nick', data => {
+      socket.nickname = data.nick
+    })
+  
     socket.on('msg', data => {
       // Saving to database
       new Message({
@@ -40,10 +56,11 @@ const socket = io => {
       io.sockets.emit('msg', data)
     })
   })
-  
-  // TODO: Maybe send userCount every ten seconds. It doesn't seems that this triggers all the time
-  io.on('disconnect', () =>
-    io.emit('userCount', userCount))
+
+  io.on('disconnect', () => {
+    io.emit('userCount', userCount)
+    io.emit('userList', getUserListAsArray())
+  })
 }
 
 module.exports = socket
