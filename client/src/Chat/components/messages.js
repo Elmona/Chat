@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Message from '../styles/message'
 import Icon from '../styles/icon'
 
-// TODO: Rewrite this
+// TODO: Rewrite this function.
 const formatDate = date =>
   new Date(date)
     .toLocaleTimeString('sv', { hour: '2-digit', minute: '2-digit' })
