@@ -49,7 +49,7 @@ const socket = io => {
         msg: data.msg,
         channel: 'general',
         avatar: data.avatar,
-        ip: socket.handshake.headers['x-forwarded-for'],
+        ip: 'unknown', 
         userAgent: socket.handshake.headers['user-agent']
       }).save()
 
