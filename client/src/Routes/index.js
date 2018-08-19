@@ -12,6 +12,12 @@ class Router extends Component {
     }
   }
 
+  componentDidMount() {
+    fetch('http://localhost:9001/ping')
+      .then(res => res.json())
+      .then(data => console.log(data))
+  }
+
   render() {
     return (
       <div style={{ height: '100%' }}>

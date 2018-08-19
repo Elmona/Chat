@@ -19,9 +19,10 @@ class Chat extends Component {
     }
 
     if (process.env.NODE_ENV === 'development') {
-      this.socket = io('')
+      this.socket = io('http://localhost:9001')
     } else {
-      this.socket = io('', { path: '/api/socket.io' })
+      // this.socket = io('', { path: '/api/socket.io' })
+      this.socket = io('')
     }
   }
 

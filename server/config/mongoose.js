@@ -5,9 +5,9 @@ require('dotenv').config()
 
 const url = 'localhost:27017'
 
-const username = process.env.DB_USER
-const password = process.env.DB_PWD
-const database = 'chat'
+// const username = process.env.DB_USER
+// const password = process.env.DB_PWD
+// const database = 'chat'
 
 /**
  * Connection to mongoose database.
@@ -27,6 +27,6 @@ module.exports.run = () => {
         process.exit(0)
       })
     })
-    resolve(mongoose.connect(`mongodb://${username}:${password}@${url}/${database}`))
+    resolve(mongoose.connect(process.env.MONGODB_URI))
   })
 }

@@ -4,8 +4,12 @@ const io = require('socket.io')(server)
 const socket = require('./components/socket')
 const mongoose = require('./config/mongoose.js')
 
-const port = 3001
+const port = process.env.PORT || 8080 
 
+app.use('/ping', (req, res) => {
+  console.log('wohooo')
+  res.send('wohoo')
+})
 // Connect to mongodb database
 mongoose.run().catch(err => {
   console.log(err)
