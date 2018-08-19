@@ -12,6 +12,7 @@ class inputForm extends Component {
       placeholder,
       fullWidth = false
     } = this.props
+
     return (
       <form onSubmit={e => onSubmit(e)}>
         <TextField

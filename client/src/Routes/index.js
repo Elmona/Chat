@@ -12,12 +12,6 @@ class Router extends Component {
     }
   }
 
-  componentDidMount() {
-    fetch('http://localhost:9001/ping')
-      .then(res => res.json())
-      .then(data => console.log(data))
-  }
-
   render() {
     return (
       <div style={{ height: '100%' }}>
@@ -26,7 +20,6 @@ class Router extends Component {
         )
           : (
             <Login login={(nick, avatar) => {
-              // console.log(nick, avatar)
               this.setState({ nick: nick, avatar: avatar, login: true })
             }} />
           )}

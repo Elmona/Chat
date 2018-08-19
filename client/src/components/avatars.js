@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
 class Avatars extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div style={{ display: 'flex' }}>
