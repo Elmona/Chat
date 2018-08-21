@@ -77,6 +77,7 @@ class Chat extends Component {
           />
           <Paper zDepth={3}>
             <InputForm
+              name='input'
               onSubmit={e => this.sendMessage(e)}
               onChange={e => this.setState({ msg: e.target.value })}
               value={this.state.msg}

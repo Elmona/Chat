@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField'
 class inputForm extends Component {
   render() {
     const {
+      name,
       value,
       onSubmit,
       onChange,
@@ -16,6 +17,7 @@ class inputForm extends Component {
     return (
       <form onSubmit={e => onSubmit(e)}>
         <TextField
+          name={name}
           value={value}
           onChange={onChange}
           style={style}
