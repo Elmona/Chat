@@ -5,9 +5,9 @@ import TextField from 'material-ui/TextField'
 class inputForm extends Component {
   render() {
     const {
+      onSubmit,
       name,
       value,
-      onSubmit,
       onChange,
       style,
       placeholder,
