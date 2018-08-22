@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Message from '../styles/message'
 import Icon from '../styles/icon'
+import Background from '../styles/background'
 
 const formatDate = date => {
   const time = new Date(date)
@@ -15,13 +16,7 @@ class Messages extends Component {
     } = this.props
 
     return (
-      <div style={{
-        flex: '1',
-        overflowX: 'hidden',
-        overflowY: 'auto',
-        backgroundColor: '#FFF',
-        boxShadow: 'inset 0px 15px 54px -30px rgba(89,89,89,0.59)'
-      }}>
+     <Background>
         {messages.map(x =>
           (<Message>
             <Icon avatar={x.avatar} />
@@ -40,7 +35,7 @@ class Messages extends Component {
           </Message>))}
         {/* A reference to the bottom of the chat. */}
         <div ref={refChatBottom}></div>
-      </div>
+      </Background>
     )
   }
 }
