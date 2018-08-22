@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Message from '../styles/message'
 import Icon from '../styles/icon'
 
-// TODO: Rewrite this function.
-const formatDate = date =>
-  new Date(date)
-    .toLocaleTimeString('sv', { hour: '2-digit', minute: '2-digit' })
+const formatDate = date => {
+  const time = new Date(date)
+  return `${time.getHours()}:${time.getMinutes()}`
+}
 
 class Messages extends Component {
   render() {
