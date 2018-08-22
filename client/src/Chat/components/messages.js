@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Message from '../styles/message'
 import Icon from '../styles/icon'
 import Background from '../styles/background'
+import Time from '../styles/time'
 
 const formatDate = date => {
   const time = new Date(date)
@@ -23,12 +24,7 @@ class Messages extends Component {
             <div>
               <div>
                 <span style={{ fontWeight: 'bold' }}>{x.nick}</span>
-                <span style={{
-                  fontStyle: 'italic',
-                  marginLeft: '5px',
-                  fontSize: '80%'
-                }}>
-                  {formatDate(x.date)}</span>
+               <Time>{formatDate(x.date)}</Time>
               </div>
               <div>{x.msg}</div>
             </div>
